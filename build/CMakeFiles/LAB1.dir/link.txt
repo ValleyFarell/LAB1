@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/LAB1.dir/main.cpp.o CMakeFiles/LAB1.dir/src/SharedPtr.cpp.o CMakeFiles/LAB1.dir/src/UniquePtr.cpp.o -o LAB1 

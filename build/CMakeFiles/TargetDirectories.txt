@@ -1,0 +1,3 @@
+/home/rustam/Documents/mephi/3 sem/informatics/LAB1/build/CMakeFiles/LAB1.dir
+/home/rustam/Documents/mephi/3 sem/informatics/LAB1/build/CMakeFiles/edit_cache.dir
+/home/rustam/Documents/mephi/3 sem/informatics/LAB1/build/CMakeFiles/rebuild_cache.dir
