@@ -16,7 +16,7 @@ private:
 
 void copy_shared_test();
 void move_shared_test();
-void counter_shared_test();
+void counter_shared_test(); 
 void move_unique_test();
 void std_shared_test();
 void std_unique_test();
