@@ -1,3 +1,6 @@
+#include<cassert>
+#include<memory>
+
 #include"tests.h"
 
 LogDuration::LogDuration(std::string id) : id_(std::move(id)) {}

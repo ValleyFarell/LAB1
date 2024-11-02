@@ -1,4 +1,3 @@
-#include<iostream>
 #include"../src/memory_utils.h"
 #include"../src/vector_utils.h"
 
