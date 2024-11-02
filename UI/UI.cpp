@@ -26,7 +26,7 @@ void UI::unique_create() {
     int value;
     std::cin >> value;
     UniquePtr<int> temp(new int(value));
-    unique_vector.push_back(std::move(temp));
+    unique_vector_.push_back(std::move(temp));
     std::cout << "  UniquePtr создан!\n\n";
 }
 void UI::shrd_create() {
@@ -35,28 +35,28 @@ void UI::shrd_create() {
     int value;
     std::cin >> value;
     SharedPtr<int> temp(new int(value));
-    shared_vector.push_back(std::move(temp));
+    shared_vector_.push_back(std::move(temp));
     std::cout << "  SharedPtr создан!\n\n";
 } 
 void UI::all_shared_ptrs() { 
-    if (shared_vector.size() == 0) {
+    if (shared_vector_.size() == 0) {
         std::cout << "  Список пуст \n"; 
         return;
     }
     std::cout << "      <<< SharedPtrs >>> \n"; 
     printf("  %10s%20s%30s\n", "ptr", "value", "counter"); 
-    for (int i = 0; i < shared_vector.size(); ++i) { 
+    for (int i = 0; i < shared_vector_.size(); ++i) { 
         printf("%d. %10p%20d%30Ld\n", 
             (i + 1),
-            shared_vector[i].get_pointer(), 
-            *(shared_vector[i]), 
-            shared_vector[i].ref_count()); 
+            shared_vector_[i].get_pointer(), 
+            *(shared_vector_[i]), 
+            shared_vector_[i].ref_count()); 
     } 
     
     std::cout << "  Выберите номер умного указателя, который хотите изменить: "; 
     int ptr_choice; 
     std::cin >> ptr_choice; 
-    if (ptr_choice <= shared_vector.size() && ptr_choice >= 1)
+    if (ptr_choice <= shared_vector_.size() && ptr_choice >= 1)
         change_shrd(ptr_choice - 1);
     else {
         std::cout << "  Вы ввели неправильный номер! \n";
@@ -64,22 +64,22 @@ void UI::all_shared_ptrs() {
     }
 }
 void UI::all_unique_ptrs() {
-    if (unique_vector.size() == 0) {
+    if (unique_vector_.size() == 0) {
         std::cout << "  Список пуст \n"; 
         return;
     }
     std::cout << "      <<< UniquePtrs >>> \n";
     printf("  %10s%20s\n", "ptr", "value"); 
-    for (int i = 0; i < unique_vector.size(); ++i) { 
+    for (int i = 0; i < unique_vector_.size(); ++i) { 
         printf("%d. %10p%20d\n",
             (i + 1),
-            unique_vector[i].get_pointer(), 
-            *(unique_vector[i])); 
+            unique_vector_[i].get_pointer(), 
+            *(unique_vector_[i])); 
     } 
     std::cout << "  Выберите номер умного указателя, который хотите изменить: "; 
     int ptr_choice;
     std::cin >> ptr_choice;
-    if (ptr_choice <= unique_vector.size() && ptr_choice >= 1)
+    if (ptr_choice <= unique_vector_.size() && ptr_choice >= 1)
         change_unique(ptr_choice - 1);
     else {
         std::cout << "  Вы ввели неправильный номер! \n";
@@ -87,8 +87,8 @@ void UI::all_unique_ptrs() {
     }
 }
 void UI::change_unique(int ptr_ind) {
-    std::cout << "  pointer: " << unique_vector[ptr_ind].get_pointer() << "\n";
-    std::cout << "  value: " << *(unique_vector[ptr_ind]) << "\n\n";
+    std::cout << "  pointer: " << unique_vector_[ptr_ind].get_pointer() << "\n";
+    std::cout << "  value: " << *(unique_vector_[ptr_ind]) << "\n\n";
     std::cout << "  1.  Поменять значение\n";
     std::cout << "  2.  Удалить указатель\n";
     std::cout << "  3.  Переместить в другой указатель(move)\n";
@@ -102,20 +102,20 @@ void UI::change_unique(int ptr_ind) {
         int new_value;
         std::cout << "  Новое значение: ";
         std::cin >> new_value;
-        *unique_vector[ptr_ind] = new_value;
+        *unique_vector_[ptr_ind] = new_value;
         std::cout << "  Значение успешно изменено!\n";
         break;
     case 2:
-        unique_vector.erase(ptr_ind);
+        unique_vector_.erase(ptr_ind);
         std::cout << "  Указатель успешно удалён!\n";
         break;
     case 3:
         int other_ind;
         std::cout << "  Введите номер указателя, в который будет совершено перемещение: ";
         std::cin >> other_ind;
-        if (other_ind <= unique_vector.size() && other_ind >= 1){
-            unique_vector[other_ind - 1] = std::move(unique_vector[ptr_ind]);
-            unique_vector.erase(ptr_ind);
+        if (other_ind <= unique_vector_.size() && other_ind >= 1){
+            unique_vector_[other_ind - 1] = std::move(unique_vector_[ptr_ind]);
+            unique_vector_.erase(ptr_ind);
             std::cout << "  Указатель успешно перемещён!\n";
         }
         else {
@@ -132,9 +132,9 @@ void UI::change_unique(int ptr_ind) {
     }
 }
 void UI::change_shrd(int ptr_ind) {
-    std::cout << "  pointer: " << shared_vector[ptr_ind].get_pointer() << "\n";
-    std::cout << "  value: " << *shared_vector[ptr_ind] << "\n";
-    std::cout << "  counter: " << shared_vector[ptr_ind].ref_count() << "\n\n";
+    std::cout << "  pointer: " << shared_vector_[ptr_ind].get_pointer() << "\n";
+    std::cout << "  value: " << *shared_vector_[ptr_ind] << "\n";
+    std::cout << "  counter: " << shared_vector_[ptr_ind].ref_count() << "\n\n";
     std::cout << "  1.  Поменять значение\n";
     std::cout << "  2.  Удалить указатель\n";
     std::cout << "  3.  Переместить в другой указатель(move)\n";
@@ -148,24 +148,24 @@ void UI::change_shrd(int ptr_ind) {
         int new_value;
         std::cout << "  Новое значение: ";
         std::cin >> new_value;
-        *shared_vector[ptr_ind] = new_value;
+        *shared_vector_[ptr_ind] = new_value;
         std::cout << "  Значение успешно изменено!\n";
         break;
     case 2:
-        shared_vector.erase(ptr_ind);
+        shared_vector_.erase(ptr_ind);
         std::cout << "  Указатель успешно удалён!\n";
         break;
     case 3:
         int other_ind;
         std::cout << "  Введите номер указателя, в который будет совершено перемещение: ";
         std::cin >> other_ind;
-        shared_vector[other_ind - 1] = std::move(shared_vector[ptr_ind]);
-        shared_vector.erase(ptr_ind);
+        shared_vector_[other_ind - 1] = std::move(shared_vector_[ptr_ind]);
+        shared_vector_.erase(ptr_ind);
         std::cout << "  Указатель успешно перемещён!\n";
         break;
     case 4:
-        shared_vector.resize(shared_vector.size() + 1);
-        shared_vector[shared_vector.size() - 1] = shared_vector[ptr_ind];
+        shared_vector_.resize(shared_vector_.size() + 1);
+        shared_vector_[shared_vector_.size() - 1] = shared_vector_[ptr_ind];
         break;
     case 5:
         break;
@@ -177,7 +177,7 @@ void UI::change_shrd(int ptr_ind) {
 }
 
 void UI::main_cycle() {
-        while(is_run) {
+        while(is_run_) {
             int main_choice = menu();
             switch (main_choice)
             {
@@ -194,7 +194,7 @@ void UI::main_cycle() {
                 all_unique_ptrs();
                 break;
             case 5:
-                is_run = false;
+                is_run_ = false;
                 break;
             }
         }

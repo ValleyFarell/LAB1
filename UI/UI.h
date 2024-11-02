@@ -3,9 +3,9 @@
 
 class UI {
 private:
-    Vector<SharedPtr<int>> shared_vector;
-    Vector<UniquePtr<int>> unique_vector;
-    bool is_run = true;
+    Vector<SharedPtr<int>> shared_vector_;
+    Vector<UniquePtr<int>> unique_vector_;
+    bool is_run_ = true;
     int menu();
     void unique_create();
     void shrd_create();

@@ -18,6 +18,6 @@ int main() {
         move_unique_test();
         std_shared_test();
         std_unique_test();
-        std::cout << "ALL TESTS ARE PASSED! \n";
+        std::cout << "Все тесты пройдены! \n";
     }
 }

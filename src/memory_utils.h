@@ -17,10 +17,10 @@ private:
             }
     };
     T * data_ = nullptr;
-    Counter * ptr_counter_ = nullptr;
+    Counter * ptr_counter_ = new Counter(1);
     void reset() {
         data_ = nullptr;
-        ptr_counter_ = nullptr;
+        ptr_counter_ = new Counter(1);
     }
 public:
     SharedPtr(T* ptr) {
@@ -29,13 +29,14 @@ public:
     }
     SharedPtr() {
         data_ = nullptr;
-        ptr_counter_ = nullptr;
+        ptr_counter_ = new Counter(1);
     }
     SharedPtr(const SharedPtr<T> & other) {
         data_ = other.data_;
-        if (ptr_counter_ && *ptr_counter_) (*ptr_counter_)--;
+        if (ptr_counter_ && *ptr_counter_) 
+            (*ptr_counter_)--;
         ptr_counter_ = other.ptr_counter_;
-        if (*ptr_counter_)
+        if (ptr_counter_ && *ptr_counter_)
             (*ptr_counter_)++;
     }
     SharedPtr(SharedPtr<T> && other) {
@@ -59,19 +60,14 @@ public:
         other.reset();
         return *this;
     }
-    unsigned long long ref_count() const { return ptr_counter_->count(); }
+    unsigned long long ref_count() const {
+            return ptr_counter_->count(); 
+        return 0;
+    }
     T& operator*() const {
         return *data_;
     }
-    void swap(SharedPtr<T>&& other) {
-        T* tmp_data = other.data_;
-        Counter* tmp_counter = other.ptr_counter_;
-        other.data_ = data_;
-        other.ptr_counter_ = ptr_counter_;
-        data_ = tmp_data;
-        ptr_counter_ = tmp_counter;
-    }
-    T* get_pointer() const {
+    const T* get_pointer() const {
         return data_;
     }
     ~SharedPtr() {
@@ -111,7 +107,7 @@ public:
     T& operator*() const {
         return *data_;
     }
-    T* get_pointer() const {
+    const T* get_pointer() const {
         return data_;
     }
     ~UniquePtr() {
