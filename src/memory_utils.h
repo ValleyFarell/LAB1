@@ -17,7 +17,7 @@ private:
             }
     };
     T * data_ = nullptr;
-    Counter * ptr_counter_ = new Counter(1);
+    Counter * ptr_counter_ = nullptr;
     void reset() {
         data_ = nullptr;
         ptr_counter_ = new Counter(1);
